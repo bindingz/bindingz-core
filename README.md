@@ -1,1 +1,1 @@
-# bindingz-providers
+# bindingz-core
