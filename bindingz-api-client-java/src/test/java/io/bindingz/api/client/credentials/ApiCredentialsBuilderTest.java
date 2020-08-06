@@ -19,27 +19,27 @@ public class ApiCredentialsBuilderTest {
 
     @Test
     public void testDefault() {
-        Assert.assertEquals(null, new ApiCredentialsBuilder().build().getApiKey());
-        Assert.assertEquals("https://api.bindingz.io", new ApiCredentialsBuilder().build().getHostname());
+        Assert.assertEquals(null, new ApiCredentialsBuilder(noFile()).build().getApiKey());
+        Assert.assertEquals("https://api.bindingz.io", new ApiCredentialsBuilder(noFile()).build().getHostname());
     }
 
     @Test
     public void testEnvironment() {
         System.setProperty("BINDINGZ_API_KEY", "asdf");
 
-        Assert.assertEquals("asdf", new ApiCredentialsBuilder().build().getApiKey());
-        Assert.assertEquals("https://api.bindingz.io", new ApiCredentialsBuilder().build().getHostname());
+        Assert.assertEquals("asdf", new ApiCredentialsBuilder(noFile()).build().getApiKey());
+        Assert.assertEquals("https://api.bindingz.io", new ApiCredentialsBuilder(noFile()).build().getHostname());
 
         System.setProperty("BINDINGZ_HOSTNAME", "http://somewhere.com");
 
-        Assert.assertEquals("asdf", new ApiCredentialsBuilder().build().getApiKey());
-        Assert.assertEquals("http://somewhere.com", new ApiCredentialsBuilder().build().getHostname());
+        Assert.assertEquals("asdf", new ApiCredentialsBuilder(noFile()).build().getApiKey());
+        Assert.assertEquals("http://somewhere.com", new ApiCredentialsBuilder(noFile()).build().getHostname());
     }
 
     @Test
     public void testSimpleIgnoreEmpty() throws IOException {
         File config = createConfigFile("api1", "hostname2");
-        ApiCredentials credentials = new ApiCredentialsBuilder(config.toString()).apiKey("").hostname("").build();
+        ApiCredentials credentials = new ApiCredentialsBuilder(config).apiKey("").hostname("").build();
         Assert.assertEquals("api1", credentials.getApiKey());
         Assert.assertEquals("hostname2", credentials.getHostname());
     }
@@ -47,8 +47,8 @@ public class ApiCredentialsBuilderTest {
     @Test
     public void testFile() throws IOException {
         File config = createConfigFile("api1", "hostname2");
-        Assert.assertEquals("api1", new ApiCredentialsBuilder(config.toString()).build().getApiKey());
-        Assert.assertEquals("hostname2", new ApiCredentialsBuilder(config.toString()).build().getHostname());
+        Assert.assertEquals("api1", new ApiCredentialsBuilder(config).build().getApiKey());
+        Assert.assertEquals("hostname2", new ApiCredentialsBuilder(config).build().getHostname());
     }
 
     @Test
@@ -58,8 +58,8 @@ public class ApiCredentialsBuilderTest {
 
         File config = createConfigFile("api1", "hostname2");
 
-        Assert.assertEquals("asdf", new ApiCredentialsBuilder(config.toString()).build().getApiKey());
-        Assert.assertEquals("http://somewhere.com", new ApiCredentialsBuilder(config.toString()).build().getHostname());
+        Assert.assertEquals("asdf", new ApiCredentialsBuilder(config).build().getApiKey());
+        Assert.assertEquals("http://somewhere.com", new ApiCredentialsBuilder(config).build().getHostname());
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ApiCredentialsBuilderTest {
         System.setProperty("BINDINGZ_API_KEY", "asdf");
         File config = createConfigFile("api1", "hostname2");
 
-        Assert.assertEquals("asdf", new ApiCredentialsBuilder(config.toString()).build().getApiKey());
-        Assert.assertEquals("hostname2", new ApiCredentialsBuilder(config.toString()).build().getHostname());
+        Assert.assertEquals("asdf", new ApiCredentialsBuilder(config).build().getApiKey());
+        Assert.assertEquals("hostname2", new ApiCredentialsBuilder(config).build().getHostname());
     }
 
     @Test
@@ -78,8 +78,8 @@ public class ApiCredentialsBuilderTest {
 
         File config = createConfigFile("api1", "hostname2");
 
-        Assert.assertEquals("mykey", new ApiCredentialsBuilder(config.toString()).apiKey("mykey").build().getApiKey());
-        Assert.assertEquals("myhostname", new ApiCredentialsBuilder(config.toString()).hostname("myhostname").build().getHostname());
+        Assert.assertEquals("mykey", new ApiCredentialsBuilder(config).apiKey("mykey").build().getApiKey());
+        Assert.assertEquals("myhostname", new ApiCredentialsBuilder(config).hostname("myhostname").build().getHostname());
     }
 
     private File createConfigFile(String apiKey, String hostname) throws IOException {
@@ -88,5 +88,9 @@ public class ApiCredentialsBuilderTest {
         config.deleteOnExit();
         new ObjectMapper().writeValue(config, credentials);
         return config;
+    }
+
+    private File noFile() {
+        return new File("DOESNT_EXIST");
     }
 }

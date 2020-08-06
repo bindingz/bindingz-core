@@ -8,16 +8,15 @@ import java.util.Optional;
 
 public class FileCredentialsLoader implements ApiCredentialsLoader {
 
-    private final String location;
+    private final File location;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public FileCredentialsLoader(String location) {
+    public FileCredentialsLoader(File location) {
         this.location = location;
     }
 
     @Override
     public Optional<String> apiKey() {
-        File location = new File(this.location);
         if (location.exists()) {
             try {
                 ApiCredentials credentials = OBJECT_MAPPER.readValue(location, ApiCredentials.class);
@@ -32,7 +31,6 @@ public class FileCredentialsLoader implements ApiCredentialsLoader {
 
     @Override
     public Optional<String> hostname() {
-        File location = new File(this.location);
         if (location.exists()) {
             try {
                 ApiCredentials credentials = OBJECT_MAPPER.readValue(location, ApiCredentials.class);
