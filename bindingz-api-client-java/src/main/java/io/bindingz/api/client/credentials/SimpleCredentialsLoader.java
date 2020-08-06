@@ -13,11 +13,11 @@ public class SimpleCredentialsLoader implements ApiCredentialsLoader {
 
     @Override
     public Optional<String> apiKey() {
-        return Optional.ofNullable(apiKey);
+        return Optional.ofNullable("".equals(apiKey) ? null : apiKey);
     }
 
     @Override
     public Optional<String> hostname() {
-        return Optional.ofNullable(hostname);
+        return Optional.ofNullable("".equals(hostname) ? null : hostname);
     }
 }

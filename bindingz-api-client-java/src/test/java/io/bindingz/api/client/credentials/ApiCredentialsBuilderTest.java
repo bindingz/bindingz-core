@@ -37,6 +37,14 @@ public class ApiCredentialsBuilderTest {
     }
 
     @Test
+    public void testSimpleIgnoreEmpty() throws IOException {
+        File config = createConfigFile("api1", "hostname2");
+        ApiCredentials credentials = new ApiCredentialsBuilder(config.toString()).apiKey("").hostname("").build();
+        Assert.assertEquals("api1", credentials.getApiKey());
+        Assert.assertEquals("hostname2", credentials.getHostname());
+    }
+
+    @Test
     public void testFile() throws IOException {
         File config = createConfigFile("api1", "hostname2");
         Assert.assertEquals("api1", new ApiCredentialsBuilder(config.toString()).build().getApiKey());
