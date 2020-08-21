@@ -21,7 +21,7 @@
         <url>https://github.com/bindingz/bindingz-core</url>
         <connection>scm:git:https://github.com/bindingz/bindingz-core.git</connection>
         <developerConnection>scm:git:https://github.com/bindingz/bindingz-core.git</developerConnection>
-        <tag>v1.0.0.1</tag>
+        <tag>v1.0.0.2</tag>
     </scm>
 
     <licenses>
