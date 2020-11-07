@@ -1,0 +1,23 @@
+{
+  "namespace" : "test",
+  "owner" : "bindingz-api-client-java",
+  "contractName" : "Dates",
+  "version" : "1",
+  "schema" : {
+    "specs" : {
+      "DRAFT_04" : {
+        "$schema" : "http://json-schema.org/draft-04/schema#",
+        "title" : "Dates",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "required" : [ "date" ]
+      }
+    }
+  }
+}

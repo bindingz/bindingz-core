@@ -1,0 +1,82 @@
+{
+  "namespace" : "test",
+  "owner" : "bindingz-api-client-java",
+  "contractName" : "Objects",
+  "version" : "1",
+  "schema" : {
+    "specs" : {
+      "DRAFT_04" : {
+        "$schema" : "http://json-schema.org/draft-04/schema#",
+        "title" : "Objects",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "stringValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "string"
+            } ]
+          },
+          "integerValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "integer"
+            } ]
+          },
+          "longValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "integer"
+            } ]
+          },
+          "decimalValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "number"
+            } ]
+          },
+          "floatValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "number"
+            } ]
+          },
+          "doubleValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "number"
+            } ]
+          },
+          "characterValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "string"
+            } ]
+          },
+          "byteValue" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "integer"
+            } ]
+          }
+        }
+      }
+    }
+  }
+}

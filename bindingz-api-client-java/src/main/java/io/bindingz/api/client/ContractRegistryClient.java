@@ -17,12 +17,12 @@
 package io.bindingz.api.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bindingz.api.configuration.SourceCodeConfiguration;
-import io.bindingz.api.model.ContractDto;
 import io.bindingz.api.client.credentials.ApiCredentials;
 import io.bindingz.api.client.credentials.ApiCredentialsBuilder;
-import io.bindingz.api.client.model.ContractResource;
-import io.bindingz.api.client.model.SourceResource;
+import io.bindingz.api.model.SourceCodeConfiguration;
+import io.bindingz.api.model.ContractDto;
+import io.bindingz.api.model.ContractResource;
+import io.bindingz.api.model.SourceResource;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,0 +1,40 @@
+{
+  "namespace" : "test",
+  "owner" : "bindingz-api-client-java",
+  "contractName" : "Primitives",
+  "version" : "1",
+  "schema" : {
+    "specs" : {
+      "DRAFT_04" : {
+        "$schema" : "http://json-schema.org/draft-04/schema#",
+        "title" : "Primitives",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "intValue" : {
+            "type" : "integer"
+          },
+          "charValue" : {
+            "type" : "string"
+          },
+          "byteValue" : {
+            "type" : "integer"
+          },
+          "longValue" : {
+            "type" : "integer"
+          },
+          "doubleValue" : {
+            "type" : "number"
+          },
+          "shortValue" : {
+            "type" : "integer"
+          },
+          "floatValue" : {
+            "type" : "number"
+          }
+        },
+        "required" : [ "intValue", "charValue", "byteValue", "longValue", "doubleValue", "shortValue", "floatValue" ]
+      }
+    }
+  }
+}
