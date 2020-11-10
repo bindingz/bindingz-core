@@ -45,6 +45,11 @@ public class ContractServiceTest {
         Assert.assertEquals(content("Dates.json"), getContractDto("Dates"));
     }
 
+    @Test
+    public void testLocalDatesWithJacksonConfiguration() throws Exception {
+        Assert.assertEquals(content("LocalDatesWithJacksonConfiguration.json"), getContractDto("LocalDatesWithJacksonConfiguration"));
+    }
+
     private String content(String name) throws URISyntaxException, IOException {
         return new String(Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource("fixtures/" + name).toURI())));
     }

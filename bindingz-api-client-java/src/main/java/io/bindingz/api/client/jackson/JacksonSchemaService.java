@@ -44,11 +44,11 @@ public class JacksonSchemaService implements SchemaService {
     }
 
     public JacksonSchemaService(List<ClassLoader> classLoaders, JacksonConfiguration configuration) {
-        if (configuration.factory().equals(ConfigurationFactory.class)) {
+        if (!configuration.factory().equals(ConfigurationFactory.class)) {
             try {
                 ConfigurationFactory factory = configuration.factory().getConstructor().newInstance();
                 generator = new JsonSchemaGenerator(
-                        factory.create(),
+                        factory.createObjectMapper(),
                         createConfig(factory.customTypeMappings())
                 );
             } catch (Exception e) {

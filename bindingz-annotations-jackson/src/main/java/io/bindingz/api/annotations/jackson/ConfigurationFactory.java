@@ -26,7 +26,7 @@ public interface ConfigurationFactory {
      *
      * @return
      */
-    ObjectMapper create();
+    ObjectMapper createObjectMapper();
 
     /**
      * Types mappings for creating the schema
