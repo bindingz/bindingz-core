@@ -20,31 +20,30 @@ import io.bindingz.api.client.jackson.JacksonSchemaService;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SchemaServiceFactory {
 
-    private List<ClassLoader> classLoaders;
+    private TypeScanner typeScanner;
     private Map<Annotation, SchemaService> schemaServices = new HashMap();
     private AtomicReference<JacksonSchemaService> defaultService = new AtomicReference<>();
 
-    public SchemaServiceFactory(List<ClassLoader> classLoaders) {
-        this.classLoaders = classLoaders;
+    public SchemaServiceFactory(TypeScanner typeScanner) {
+        this.typeScanner = typeScanner;
     }
 
     public SchemaService getSchemaService(Class contract) {
         // Only Jackson is supported at the moment
         JacksonConfiguration configuration = (JacksonConfiguration) contract.getAnnotation(JacksonConfiguration.class);
         if (configuration != null) {
-            return schemaServices.computeIfAbsent(configuration, (conf) -> new JacksonSchemaService(classLoaders, configuration));
+            return schemaServices.computeIfAbsent(configuration, (conf) -> new JacksonSchemaService(typeScanner, configuration));
         }
 
         // Use Jackson as default
         JacksonSchemaService service = defaultService.get();
         if (service == null) {
-            defaultService.set(new JacksonSchemaService(classLoaders));
+            defaultService.set(new JacksonSchemaService(typeScanner));
         }
 
         return defaultService.get();

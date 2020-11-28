@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Collection;
 
 public class ContractServiceTest {
@@ -20,7 +19,7 @@ public class ContractServiceTest {
 
     @Before
     public void setUp() {
-        service = new ContractService(Arrays.asList(this.getClass().getClassLoader()));
+        service = new ContractService(new ClassGraphTypeScanner(this.getClass().getClassLoader()));
         mapper = new ObjectMapper();
     }
 

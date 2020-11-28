@@ -19,9 +19,9 @@ package io.bindingz.api.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bindingz.api.client.credentials.ApiCredentials;
 import io.bindingz.api.client.credentials.ApiCredentialsBuilder;
-import io.bindingz.api.model.SourceCodeConfiguration;
 import io.bindingz.api.model.ContractDto;
 import io.bindingz.api.model.ContractResource;
+import io.bindingz.api.model.SourceCodeConfiguration;
 import io.bindingz.api.model.SourceResource;
 
 import java.io.BufferedReader;
@@ -39,6 +39,10 @@ public class ContractRegistryClient {
     private final String apiKey;
     private final ObjectMapper objectMapper;
 
+    public ContractRegistryClient(String hostname, String apiKey) {
+        this(hostname, apiKey, new ObjectMapper());
+    }
+
     public ContractRegistryClient(String hostname, String apiKey, ObjectMapper objectMapper) {
         ApiCredentials credentials = new ApiCredentialsBuilder().apiKey(apiKey).hostname(hostname).build();
         this.hostname = credentials.getHostname();
@@ -54,9 +58,8 @@ public class ContractRegistryClient {
                 contractDto.getContractName(),
                 contractDto.getVersion());
         try {
-            System.out.println(String.format("Bindingz - Requesting %s with %s",
-                    url,
-                    objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(contractDto.getSchema())));
+            System.out.println(String.format("Bindingz - Requesting %s", url));
+
             String response = post(url, objectMapper.writeValueAsString(contractDto.getSchema()));
             return objectMapper.readValue(response, ContractResource.class);
         } catch (IOException e) {
@@ -77,9 +80,7 @@ public class ContractRegistryClient {
                 contractName,
                 version);
         try {
-            System.out.println(String.format("Bindingz - Requesting %s with %s",
-                    url,
-                    objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(configuration)));
+            System.out.println(String.format("Bindingz - Requesting %s", url));
             String response = post(url, objectMapper.writeValueAsString(configuration));
             return objectMapper.readValue(response, SourceResource.class);
         } catch (IOException e) {
@@ -97,7 +98,7 @@ public class ContractRegistryClient {
         post.connect();
         post.getOutputStream().write(body.getBytes("UTF-8"));
 
-        System.out.println("Bindingz Response Code : " + post.getResponseCode());
+        System.out.println(String.format("Bindingz - Response Code %s", post.getResponseCode()));
         return getAsString(post.getInputStream());
     }
 

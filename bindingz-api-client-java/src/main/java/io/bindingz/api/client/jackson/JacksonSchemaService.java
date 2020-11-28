@@ -22,28 +22,31 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.kjetland.jackson.jsonSchema.JsonSchemaConfig;
 import com.kjetland.jackson.jsonSchema.JsonSchemaDraft;
 import com.kjetland.jackson.jsonSchema.JsonSchemaGenerator;
-import io.bindingz.api.annotations.jackson.JacksonConfiguration;
 import io.bindingz.api.annotations.jackson.ConfigurationFactory;
+import io.bindingz.api.annotations.jackson.JacksonConfiguration;
 import io.bindingz.api.client.SchemaService;
+import io.bindingz.api.client.TypeScanner;
 import io.bindingz.api.model.JsonSchemaSpec;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class JacksonSchemaService implements SchemaService {
 
     private final JsonSchemaGenerator generator;
 
-    public JacksonSchemaService(List<ClassLoader> classLoaders) {
-        this.generator = createDefaultGenerator(classLoaders);
+    public JacksonSchemaService(TypeScanner typeScanner) {
+        this.generator = createDefaultGenerator(typeScanner);
     }
 
-    public JacksonSchemaService(List<ClassLoader> classLoaders, JacksonConfiguration configuration) {
+    public JacksonSchemaService(TypeScanner typeScanner, JacksonConfiguration configuration) {
         if (!configuration.factory().equals(ConfigurationFactory.class)) {
             try {
                 ConfigurationFactory factory = configuration.factory().getConstructor().newInstance();
@@ -55,7 +58,7 @@ public class JacksonSchemaService implements SchemaService {
                 throw new IllegalArgumentException("Unable to create ConfigurationFactory");
             }
         } else {
-            generator = createDefaultGenerator(classLoaders);
+            generator = createDefaultGenerator(typeScanner);
         }
     }
 
@@ -66,14 +69,14 @@ public class JacksonSchemaService implements SchemaService {
         return schemas;
     }
 
-    private JsonSchemaGenerator createDefaultGenerator(List<ClassLoader> classLoaders) {
+    private JsonSchemaGenerator createDefaultGenerator(TypeScanner typeScanner) {
         Map<String, String> typeMappings = new HashMap<>();
         typeMappings.put("java.time.LocalDateTime", "datetime-local");
         typeMappings.put("java.time.OffsetDateTime", "datetime");
         typeMappings.put("java.time.LocalDate", "date");
         typeMappings.put("org.joda.time.LocalDate", "date");
         return new JsonSchemaGenerator(
-                createDefaultObjectMapper(classLoaders),
+                createDefaultObjectMapper(typeScanner),
                 createConfig(typeMappings)
         );
     }
@@ -106,22 +109,11 @@ public class JacksonSchemaService implements SchemaService {
         return config.withJsonSchemaDraft(version(JsonSchemaSpec.DRAFT_04));
     }
 
-    private ObjectMapper createDefaultObjectMapper(List<ClassLoader> classLoaders) {
+    private ObjectMapper createDefaultObjectMapper(TypeScanner typeScanner) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-        String[] packages = Arrays.stream(Package.getPackages())
-                .map(aPackage -> aPackage.getName().split("\\.")[0])
-                .collect(Collectors.toSet())
-                .toArray(new String[]{});
-
-        Reflections reflections = new Reflections(ConfigurationBuilder.build()
-                .addClassLoaders(classLoaders)
-                .forPackages(packages)
-                .addScanners(new SubTypesScanner())
-        );
-
-        Set<Class<? extends Module>> modules = reflections.getSubTypesOf(Module.class);
+        List<Class<? extends Module>> modules = typeScanner.getSubTypesOf(Module.class);
         for (Class<? extends Module> moduleClass : modules) {
             try {
                 Constructor[] constructors = moduleClass.getConstructors();

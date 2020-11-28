@@ -21,9 +21,6 @@ import io.bindingz.api.annotations.Contract;
 import io.bindingz.api.model.ContractDto;
 import io.bindingz.api.model.ContractSchema;
 import io.bindingz.api.model.JsonSchemaSpec;
-import org.reflections.Reflections;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,16 +31,12 @@ import java.util.stream.Collectors;
 
 public class ContractService {
 
-    private final List<ClassLoader> classLoaders;
+    private final TypeScanner typeScanner;
     private final SchemaServiceFactory schemaServiceFactory;
 
-    public ContractService(ClassLoader... classLoaders) {
-        this(Arrays.asList(classLoaders));
-    }
-
-    public ContractService(List<ClassLoader> classLoaders) {
-        this.classLoaders = classLoaders;
-        this.schemaServiceFactory = new SchemaServiceFactory(classLoaders);
+    public ContractService(TypeScanner typeScanner) {
+        this.typeScanner = typeScanner;
+        this.schemaServiceFactory = new SchemaServiceFactory(typeScanner);
     }
 
     public Collection<ContractDto> create(String... packageNames) throws IOException {
@@ -51,13 +44,7 @@ public class ContractService {
     }
 
     public Collection<ContractDto> create(List<String> packageNames) throws IOException {
-        Reflections reflections = new Reflections(ConfigurationBuilder.build()
-                .addScanners(new TypeAnnotationsScanner())
-                .forPackages(packageNames.toArray(new String[]{}))
-                .addClassLoaders(classLoaders)
-        );
-
-        Collection<Class<?>> contractClasses = reflections.getTypesAnnotatedWith(Contract.class);
+        Collection<Class<?>> contractClasses = typeScanner.getTypesAnnotatedWith(Contract.class, packageNames);
         return contractClasses.stream().map(clazz -> createResource(clazz)).collect(Collectors.toList());
     }
 
