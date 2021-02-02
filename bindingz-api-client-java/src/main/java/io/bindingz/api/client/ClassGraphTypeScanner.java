@@ -25,7 +25,7 @@ public class ClassGraphTypeScanner implements TypeScanner {
     public <T> List<Class<? extends T>> getSubTypesOf(Class<T> type, List<String> packages) {
         ClassGraph classGraph = new ClassGraph()
                 .enableAllInfo()
-                .addClassLoader(classLoader)
+                .overrideClassLoaders(classLoader)
                 .acceptPackages(packages.toArray(new String[]{}));
 
         List<Class<? extends T>> result = new ArrayList<>();
@@ -40,7 +40,7 @@ public class ClassGraphTypeScanner implements TypeScanner {
             for (ClassInfo classInfo : classInfos) {
                 String className = classInfo.getName();
                 try {
-                    result.add((Class<T>)classLoader.loadClass(className));
+                    result.add((Class<? extends T>) Class.forName(className, true, classLoader));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -58,7 +58,7 @@ public class ClassGraphTypeScanner implements TypeScanner {
     public List<Class<?>> getTypesAnnotatedWith(Class<?> type, List<String> packages) {
         ClassGraph classGraph = new ClassGraph()
                 .enableAllInfo()
-                .addClassLoader(classLoader)
+                .overrideClassLoaders(classLoader)
                 .acceptPackages(packages.toArray(new String[]{}));
 
         List<Class<?>> result = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ClassGraphTypeScanner implements TypeScanner {
             for (ClassInfo classInfo : scanResult.getClassesWithAnnotation(type.getName())) {
                 String className = classInfo.getName();
                 try {
-                    result.add(classLoader.loadClass(className));
+                    result.add(Class.forName(className, true, classLoader));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
