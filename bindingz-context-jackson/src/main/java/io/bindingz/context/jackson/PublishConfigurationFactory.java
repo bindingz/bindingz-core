@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.bindingz.api.client;
+package io.bindingz.context.jackson;
 
-import io.bindingz.api.client.context.definition.model.PublishContractDefinition;
-import io.bindingz.api.model.ContractDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.bindingz.context.loader.TypeScanner;
 
-import java.util.Collection;
-import java.util.List;
+public interface PublishConfigurationFactory {
 
-public interface ContractService {
-    Collection<ContractDto> create(List<PublishContractDefinition> contracts);
+    /**
+     * Create an instance of ObjectMapper used for creating the schema
+     *
+     * @return
+     */
+    ObjectMapper objectMapper(TypeScanner typeScanner);
 }

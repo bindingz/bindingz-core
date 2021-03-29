@@ -16,11 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>io.bindingz</groupId>
-            <artifactId>bindingz-annotations</artifactId>
+            <artifactId>bindingz-context</artifactId>
         </dependency>
         <dependency>
             <groupId>io.bindingz</groupId>
-            <artifactId>bindingz-annotations-jackson</artifactId>
+            <artifactId>bindingz-context-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.bindingz</groupId>

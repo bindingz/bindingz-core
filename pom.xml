@@ -32,8 +32,8 @@
     </licenses>
 
     <modules>
-        <module>bindingz-annotations</module>
-        <module>bindingz-annotations-jackson</module>
+        <module>bindingz-context</module>
+        <module>bindingz-context-jackson</module>
         <module>bindingz-api-model</module>
         <module>bindingz-api-client-java</module>
     </modules>
@@ -182,12 +182,12 @@
         <dependencies>
             <dependency>
                 <groupId>io.bindingz</groupId>
-                <artifactId>bindingz-annotations</artifactId>
+                <artifactId>bindingz-context</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bindingz</groupId>
-                <artifactId>bindingz-annotations-jackson</artifactId>
+                <artifactId>bindingz-context-jackson</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -239,6 +239,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
     <distributionManagement>
         <snapshotRepository>

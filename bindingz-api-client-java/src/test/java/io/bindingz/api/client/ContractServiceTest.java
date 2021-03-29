@@ -1,6 +1,9 @@
 package io.bindingz.api.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.bindingz.api.client.context.definition.JsonDefinitionReader;
+import io.bindingz.api.client.context.definition.model.Definition;
+import io.bindingz.api.client.jackson.JacksonContractService;
 import io.bindingz.api.model.ContractDto;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,11 +19,17 @@ public class ContractServiceTest {
 
     private ObjectMapper mapper;
     private ContractService service;
+    private Collection<ContractDto> dtos;
 
     @Before
     public void setUp() {
-        service = new ContractService(new ClassGraphTypeScanner(this.getClass().getClassLoader()));
+        service = new JacksonContractService(new ClassGraphTypeScanner(this.getClass().getClassLoader()));
         mapper = new ObjectMapper();
+        Definition definition = new JsonDefinitionReader().read(
+                this.getClass()
+                        .getClassLoader()
+                        .getResource("definition.json").getFile());
+        dtos = service.create(definition.getPublish().getContracts());
     }
 
     @Test
@@ -45,16 +54,16 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testLocalDatesWithJacksonConfiguration() throws Exception {
-        Assert.assertEquals(content("LocalDatesWithJacksonConfiguration.json"), getContractDto("LocalDatesWithJacksonConfiguration"));
+    public void testLocalDatesWithCustomConfiguration() throws Exception {
+        System.out.println(getContractDto("LocalDatesWithCustomConfiguration"));
+        Assert.assertEquals(content("LocalDatesWithCustomConfiguration.json"), getContractDto("LocalDatesWithCustomConfiguration"));
     }
 
     private String content(String name) throws URISyntaxException, IOException {
-        return new String(Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource("fixtures/" + name).toURI())));
+        return new String(Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource("schemas/" + name).toURI())));
     }
 
     private String getContractDto(String name) throws IOException {
-        Collection<ContractDto> dtos = service.create("io.bindingz.api.client.testclasses");
         ContractDto result = dtos.stream().filter(dto -> dto.getContractName().equals(name)).findFirst().get();
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
     }

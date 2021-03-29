@@ -13,14 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.bindingz.api.client;
 
-import io.bindingz.api.client.context.definition.model.PublishContractDefinition;
-import io.bindingz.api.model.ContractDto;
+package io.bindingz.api.client.context.definition.model;
 
-import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
+
 import java.util.List;
+import java.util.Map;
 
-public interface ContractService {
-    Collection<ContractDto> create(List<PublishContractDefinition> contracts);
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@With
+public class PublishConfiguration {
+    private String configurationFactoryClass;
+    private Map<String, String> typeMappings;
+
+    private String packageName;
+    private String namespace;
+    private String owner;
+    private List<PublishContractDefinition> contracts;
 }

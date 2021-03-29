@@ -1,0 +1,53 @@
+{
+  "namespace" : "test",
+  "owner" : "bindingz-api-client-java",
+  "contractName" : "LocalDatesWithCustomConfiguration",
+  "version" : "1",
+  "schema" : {
+    "specs" : {
+      "DRAFT_04" : {
+        "$schema" : "http://json-schema.org/draft-04/schema#",
+        "title" : "Local Dates",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "localDate" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "array",
+              "items" : {
+                "type" : "integer"
+              },
+              "format" : "date"
+            } ]
+          },
+          "localTime" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "array",
+              "items" : {
+                "type" : "integer"
+              }
+            } ]
+          },
+          "localDateTime" : {
+            "oneOf" : [ {
+              "type" : "null",
+              "title" : "Not included"
+            }, {
+              "type" : "array",
+              "items" : {
+                "type" : "integer"
+              },
+              "format" : "datetime-local"
+            } ]
+          }
+        }
+      }
+    }
+  }
+}

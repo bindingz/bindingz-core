@@ -1,0 +1,46 @@
+{
+  "publish": {
+    "typeMappings": {
+      "java.time.LocalDateTime": "datetime-local",
+      "java.time.OffsetDateTime": "datetime",
+      "java.time.LocalDate": "date",
+      "org.joda.time.LocalDate": "date"
+    },
+    "namespace": "test",
+    "owner": "bindingz-api-client-java",
+    "packageName": "io.bindingz.api.client.testclasses",
+    "contracts": [
+      {
+        "className": "Dates",
+        "contractName": "Dates",
+        "version": "1"
+      },
+      {
+        "className": "Java8",
+        "contractName": "Java8",
+        "version": "1"
+      },
+      {
+        "className": "LocalDates",
+        "contractName": "LocalDates",
+        "version": "1"
+      },
+      {
+        "className": "Objects",
+        "contractName": "Objects",
+        "version": "1"
+      },
+      {
+        "className": "Primitives",
+        "contractName": "Primitives",
+        "version": "1"
+      },
+      {
+        "configurationFactoryClass":  "io.bindingz.api.client.testclasses.CustomPublishConfigurationFactory",
+        "className": "LocalDates",
+        "contractName": "LocalDatesWithCustomConfiguration",
+        "version": "1"
+      }
+    ]
+  }
+}
