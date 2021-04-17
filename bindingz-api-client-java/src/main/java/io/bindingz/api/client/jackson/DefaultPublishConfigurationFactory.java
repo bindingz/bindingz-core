@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class DefaultPublishConfigurationFactory implements PublishConfigurationFactory { ;
+public class DefaultPublishConfigurationFactory implements PublishConfigurationFactory {
 
     @Override
     public ObjectMapper objectMapper(TypeScanner typeScanner) {

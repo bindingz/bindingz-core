@@ -69,7 +69,7 @@ public class JacksonContractService implements ContractService {
     
     private Map<JsonSchemaSpec, JsonNode> createSchemas(PublishContractDefinition contract) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Map<JsonSchemaSpec, JsonNode> schemas = new HashMap<>();
-        Class<PublishConfigurationFactory> configurationFactoryClass = (Class<PublishConfigurationFactory>)typeScanner.getClass(contract.getConfigurationFactoryClass());
+        Class<? extends PublishConfigurationFactory> configurationFactoryClass = getPublishConfigurationFactory(contract);
         PublishConfigurationFactory publishConfigurationFactory = configurationFactoryClass.getConstructor().newInstance();
         JsonSchemaGenerator generator = new JsonSchemaGenerator(
                 publishConfigurationFactory.objectMapper(typeScanner),
@@ -79,6 +79,16 @@ public class JacksonContractService implements ContractService {
         String fullClassName = String.format("%s.%s", contract.getPackageName(), contract.getClassName());
         schemas.put(JsonSchemaSpec.DRAFT_04, generator.generateJsonSchema(typeScanner.getClass(fullClassName)));
         return schemas;
+    }
+
+    private Class<? extends PublishConfigurationFactory> getPublishConfigurationFactory(PublishContractDefinition contract) {
+        Class<? extends PublishConfigurationFactory> configurationFactoryClass;
+        if (DefaultPublishConfigurationFactory.class.getName().equals(contract.getConfigurationFactoryClass())) {
+            configurationFactoryClass = DefaultPublishConfigurationFactory.class;
+        } else {
+            configurationFactoryClass = (Class<PublishConfigurationFactory>)typeScanner.getClass(contract.getConfigurationFactoryClass());
+        }
+        return configurationFactoryClass;
     }
 
     private JsonSchemaConfig createConfig(Map<String, String> customTypesToFormats) {
