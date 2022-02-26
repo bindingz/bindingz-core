@@ -5,7 +5,7 @@
     <parent>
         <artifactId>bindingz-core</artifactId>
         <groupId>io.bindingz</groupId>
-        <version>1.0.4</version>
+        <version>1.0.5-SNAPSHOT</version>
     </parent>
 
     <groupId>io.bindingz</groupId>
