@@ -6,12 +6,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.bindingz.context.jackson.PublishConfigurationFactory;
 import io.bindingz.context.loader.TypeScanner;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 public class DefaultPublishConfigurationFactory implements PublishConfigurationFactory {
 
     @Override
@@ -27,7 +29,7 @@ public class DefaultPublishConfigurationFactory implements PublishConfigurationF
                     if (constructor.getParameterCount() == 0) {
                         Module module = constructor.newInstance();
                         mapper.registerModule(module);
-                        System.out.println("Registered module " + moduleClass);
+                        log.info("Registered module " + moduleClass);
                     }
                 }
             } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {

@@ -23,6 +23,7 @@ import io.bindingz.api.model.ContractDto;
 import io.bindingz.api.model.ContractResource;
 import io.bindingz.api.model.SourceCodeConfiguration;
 import io.bindingz.api.model.SourceResource;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class ContractRegistryClient {
 
     private final String hostname;
@@ -80,7 +82,7 @@ public class ContractRegistryClient {
                 contractName,
                 version);
         try {
-            System.out.println(String.format("Bindingz - Requesting %s", url));
+            log.info(String.format("Bindingz - Requesting %s", url));
             String response = post(url, objectMapper.writeValueAsString(configuration));
             return objectMapper.readValue(response, SourceResource.class);
         } catch (IOException e) {
@@ -98,7 +100,7 @@ public class ContractRegistryClient {
         post.connect();
         post.getOutputStream().write(body.getBytes("UTF-8"));
 
-        System.out.println(String.format("Bindingz - Response Code %s", post.getResponseCode()));
+        log.info(String.format("Bindingz - Response Code %s", post.getResponseCode()));
         return getAsString(post.getInputStream());
     }
 
