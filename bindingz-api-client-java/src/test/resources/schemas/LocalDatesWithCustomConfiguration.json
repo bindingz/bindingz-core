@@ -12,39 +12,24 @@
         "additionalProperties" : false,
         "properties" : {
           "localDate" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "array",
-              "items" : {
-                "type" : "integer"
-              },
-              "format" : "date"
-            } ]
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            },
+            "format" : "date"
           },
           "localTime" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "array",
-              "items" : {
-                "type" : "integer"
-              }
-            } ]
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
           },
           "localDateTime" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "array",
-              "items" : {
-                "type" : "integer"
-              },
-              "format" : "datetime-local"
-            } ]
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            },
+            "format" : "datetime-local"
           }
         }
       }

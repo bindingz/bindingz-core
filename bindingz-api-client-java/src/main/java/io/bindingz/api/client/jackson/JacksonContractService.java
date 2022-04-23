@@ -95,8 +95,8 @@ public class JacksonContractService implements ContractService {
         JsonSchemaConfig config = JsonSchemaConfig.create(
                 false,
                 Optional.empty(),
-                true,
-                true,
+                false,
+                false,
                 false,
                 false,
                 false,

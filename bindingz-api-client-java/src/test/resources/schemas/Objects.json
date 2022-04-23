@@ -12,68 +12,28 @@
         "additionalProperties" : false,
         "properties" : {
           "stringValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "string"
-            } ]
+            "type" : "string"
           },
           "integerValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "integer"
-            } ]
+            "type" : "integer"
           },
           "longValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "integer"
-            } ]
+            "type" : "integer"
           },
           "decimalValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "number"
-            } ]
+            "type" : "number"
           },
           "floatValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "number"
-            } ]
+            "type" : "number"
           },
           "doubleValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "number"
-            } ]
+            "type" : "number"
           },
           "characterValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "string"
-            } ]
+            "type" : "string"
           },
           "byteValue" : {
-            "oneOf" : [ {
-              "type" : "null",
-              "title" : "Not included"
-            }, {
-              "type" : "integer"
-            } ]
+            "type" : "integer"
           }
         }
       }
