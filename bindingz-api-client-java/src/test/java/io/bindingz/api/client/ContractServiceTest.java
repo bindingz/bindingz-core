@@ -65,7 +65,6 @@ public class ContractServiceTest {
 
     private String getContractDto(String name) throws IOException {
         ContractDto result = dtos.stream().filter(dto -> dto.getContractName().equals(name)).findFirst().get();
-        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
     }
 }
