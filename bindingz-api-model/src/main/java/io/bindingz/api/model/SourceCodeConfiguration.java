@@ -16,6 +16,7 @@
 
 package io.bindingz.api.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class SourceCodeConfiguration {
     private String participantNamespace;
     private String participantName;
 
-    private Map<String, String> providerConfiguration = new HashMap<>();
+    private Map<String, Serializable> providerConfiguration = new HashMap<>();
 
     public String getPackageName() {
         return packageName;
@@ -56,11 +57,11 @@ public class SourceCodeConfiguration {
         this.sourceCodeProvider = sourceCodeProvider;
     }
 
-    public Map<String, String> getProviderConfiguration() {
+    public Map<String, Serializable> getProviderConfiguration() {
         return providerConfiguration;
     }
 
-    public void setProviderConfiguration(Map<String, String> providerConfiguration) {
+    public void setProviderConfiguration(Map<String, Serializable> providerConfiguration) {
         this.providerConfiguration = providerConfiguration;
     }
 
